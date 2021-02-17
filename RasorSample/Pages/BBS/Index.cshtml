@@ -1,0 +1,33 @@
+﻿@page
+@model RasorSample.Pages.BBS.IndexModel
+
+@{
+    ViewData["Title"] = "1行掲示板";
+}
+
+<h1>1行掲示板</h1>
+
+<p>
+    <a asp-page="Create">投稿する</a>
+</p>
+<table class="table">
+    <tbody>
+@foreach (var item in Model.Writing) {
+        <tr>
+            <td>
+                <h2>@Html.DisplayFor(modelItem => item.Name)</h2>
+            </td>
+            <td>
+                <h2>@Html.DisplayFor(modelItem => item.Comment)</h2>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">編集</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">削除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

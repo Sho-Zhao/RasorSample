@@ -1,0 +1,43 @@
+﻿@page
+@model RasorSample.Pages.BBS.CreateModel
+
+@{
+    ViewData["Title"] = "投稿ページ";
+}
+
+<h1>投稿する</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Writing.Name" class="control-label"></label>
+                <input asp-for="Writing.Name" class="form-control" />
+                <span asp-validation-for="Writing.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">書き込み内容</label>
+                <input asp-for="Writing.Comment" class="form-control" />
+                <span asp-validation-for="Writing.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Writing.ReleaseDate" class="control-label"></label>
+                <input asp-for="Writing.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Writing.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="投稿" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">掲示板に戻る</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
