@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RasorSample.Data;
 using RasorSample.Model;
 
 namespace RasorSample.Pages.BBS
@@ -19,11 +17,30 @@ namespace RasorSample.Pages.BBS
             _context = context;
         }
 
-        public IList<Writing> Writing { get;set; }
+        public IList<Writing> Writing { get;set; }  //For Index
 
-        public async Task OnGetAsync()
+
+        [BindProperty]
+        public Writing WritingCreator { get; set; } //For Create
+
+        public async Task OnGetAsync()  //For Index
         {
             Writing = await _context.Writing.ToListAsync();
+        }
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostAsync()  //For Create
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            WritingCreator.ReleaseDate = DateTime.Now;  //投稿時の日付を自動記載
+            _context.Writing.Add(WritingCreator);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
